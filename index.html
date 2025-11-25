@@ -10,9 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
 
     <style>
-        /* --- RESET & BASIC SETUP --- */
         * { box-sizing: border-box; }
-
         body {
             margin: 0;
             padding: 0;
@@ -27,24 +25,7 @@
             position: relative;
         }
 
-        /* --- BACKGROUND LOGO SAMAR --- */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 800px;
-            height: 800px;
-            background-image: url('/mnt/data/logo yayasan.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            transform: translate(-50%, -50%);
-            opacity: 0.07; /* SAMAR */
-            z-index: -5;
-        }
-
-        /* --- ANIMATED BACKGROUND (CYBER GRID) --- */
+        /* Background grid */
         .bg-animation {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -52,119 +33,105 @@
                 linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 30px 30px;
-            transform-origin: center bottom;
             animation: moveGrid 10s linear infinite;
             z-index: -2;
         }
-        
-        .glow-spot {
-            position: absolute;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(0, 113, 197, 0.2) 0%, rgba(0,0,0,0) 70%);
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
-        }
-
         @keyframes moveGrid {
             0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
             100% { transform: perspective(500px) rotateX(60deg) translateY(30px); }
         }
 
-        /* --- GLASS CARD --- */
+        .glow-spot {
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 113, 197, 0.2), transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        /* Card */
         .glass-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 24px;
-            padding: 40px 30px;
-            width: 320px;
+            padding: 25px 30px 40px;
+            width: 330px;
             text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             animation: floatCard 6s ease-in-out infinite;
-            border: 1px solid rgba(255,255,255,0.1);
         }
-
         @keyframes floatCard {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
 
-        /* --- 3D MODEL --- */
+        /* Logo */
+        .logo {
+            width: 110px;
+            height: auto;
+            margin: 0 auto 10px auto;
+            display: block;
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.1));
+        }
+
         model-viewer {
             width: 100%;
-            height: 180px;
-            background-color: transparent;
-            margin-top: -60px;
-            margin-bottom: 10px;
+            height: 170px;
+            margin-bottom: 5px;
             filter: drop-shadow(0 0 15px rgba(0, 195, 255, 0.4));
         }
 
-        /* --- TEXT --- */
+        /* Title */
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            text-transform: uppercase;
+            font-size: 22px;
+            margin: 5px 0 25px 0;
+            letter-spacing: 2px;
             background: linear-gradient(90deg, #00C6FF, #0072FF);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        p {
-            color: #aaa;
-            font-size: 12px;
-            margin-top: 25px;
-            letter-spacing: 1px;
-        }
-
-        /* --- BUTTONS --- */
         .btn {
             display: flex;
-            align-items: center;
             justify-content: center;
-            width: 100%;
-            padding: 16px;
-            margin: 15px 0;
+            align-items: center;
+            padding: 14px;
+            margin: 12px 0;
             text-decoration: none;
             color: white;
             font-weight: bold;
             font-family: 'Orbitron', sans-serif;
             border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
+            font-size: 14px;
             text-transform: uppercase;
-            border: 1px solid rgba(255,255,255,0.1);
+            transition: .3s;
         }
 
-        .btn-1 {
-            background: linear-gradient(45deg, #FF416C, #FF4B2B);
-        }
-
-        .btn-2 {
-            background: linear-gradient(45deg, #2193b0, #6dd5ed);
-        }
+        .btn-1 { background: linear-gradient(45deg, #FF416C, #FF4B2B); }
+        .btn-2 { background: linear-gradient(45deg, #2193b0, #6dd5ed); }
 
         .btn:hover {
-            transform: scale(1.05) translateY(-2px);
+            transform: scale(1.06) translateY(-2px);
             filter: brightness(1.2);
         }
 
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: 0.5s;
-        }
-        .btn:hover::after {
-            left: 100%;
+        p {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 25px;
+            letter-spacing: 1px;
         }
 
         /* COPYRIGHT */
         .copyright {
-            margin-top: 20px;
+            margin-top: 15px;
             font-size: 10px;
-            letter-spacing: 2px;
             opacity: 0.5;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
     </style>
@@ -175,7 +142,10 @@
     <div class="glow-spot"></div>
 
     <div class="glass-card">
-        
+
+        <!-- LOGO FORMAL CENTER -->
+        <img src="/mnt/data/logo yayasan.png" class="logo" alt="Logo ALC">
+
         <model-viewer 
             src="computer_processor.glb" 
             auto-rotate 
@@ -186,22 +156,4 @@
             interaction-prompt="none">
         </model-viewer>
 
-        <h1>AR Hardware</h1>
-        
-        <a href="soal1.html" class="btn btn-1">
-            <span style="margin-right: 10px;">🔥</span> Soal 1: RAM
-        </a>
-        
-        <a href="soal2.html" class="btn btn-2">
-            <span style="margin-right: 10px;">💾</span> Soal 2: CPU
-        </a>
-
-        <p>PILIH MATERI UNTUK SCAN AR</p>
-
-        <div class="copyright">
-            © ALC2025
-        </div>
-    </div>
-
-</body>
-</html>
+        <h1>AR Hardware</
