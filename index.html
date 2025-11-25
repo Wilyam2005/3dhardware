@@ -3,57 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Demo - AMD Ryzen 5 7600</title>
-
+    <title>AR Hardware Hub</title>
+    
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
 
     <style>
+        /* --- RESET & BASIC SETUP --- */
+        * { box-sizing: border-box; }
         body {
             margin: 0;
             padding: 0;
-            width: 100vw;
+            font-family: 'Roboto', sans-serif;
+            background-color: #050505;
+            color: white;
             height: 100vh;
-            background-color: #f0f0f0; /* Warna latar belakang abu-abu muda */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Mencegah scroll */
         }
+
+        /* --- ANIMATED BACKGROUND (CYBER GRID) --- */
+        .bg-animation {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-position: center bottom;
+            transform-origin: center bottom;
+            animation: moveGrid 10s linear infinite;
+            z-index: -2;
+        }
+        
+        /* Efek cahaya ambient di belakang */
+        .glow-spot {
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 113, 197, 0.2) 0%, rgba(0,0,0,0) 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(30px); }
+        }
+
+        /* --- GLASS CARD CONTAINER --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px 30px;
+            width: 320px;
+            max-width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: floatCard 6s ease-in-out infinite;
+        }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* --- 3D MODEL HEADER --- */
         model-viewer {
             width: 100%;
-            height: 100%;
-            /* Menambahkan latar belakang gradasi agar terlihat lebih profesional */
-            background: radial-gradient(circle at center, #ffffff 0%, #e0e0e0 100%);
+            height: 180px;
+            background-color: transparent;
+            margin-top: -60px; /* Membuat model "keluar" sedikit dari atas kartu */
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 15px rgba(0, 195, 255, 0.4));
         }
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            margin: 10px 0 30px 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #00C6FF, #0072FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 198, 255, 0.3);
+        }
+
+        p {
+            color: #aaa;
+            font-size: 12px;
+            margin-top: 25px;
+            letter-spacing: 1px;
+        }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 16px;
+            margin: 15px 0;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 14px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Tombol 1: Tema Ryzen (Merah/Oranye) */
+        .btn-1 {
+            background: linear-gradient(45deg, #FF416C, #FF4B2B);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.3);
+        }
+
+        /* Tombol 2: Tema Processor (Biru/Cyan) */
+        .btn-2 {
+            background: linear-gradient(45deg, #2193b0, #6dd5ed);
+            box-shadow: 0 5px 15px rgba(33, 147, 176, 0.3);
+        }
+
+        /* Hover Effects */
+        .btn:hover {
+            transform: scale(1.05) translateY(-2px);
+            filter: brightness(1.2);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Kilauan pada tombol */
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        .btn:hover::after {
+            left: 100%;
+        }
+
     </style>
 </head>
 <body>
 
-    <model-viewer
-        /* 1. SUMBER FILE (Bagian paling penting) */
-        /* Pastikan nama file ini PERSIS sama dengan nama file yang Anda upload, huruf besar/kecil berpengaruh! */
-        src="amd_ryzen_5_7600_cpu_chip_am5_socket.glb"
+    <div class="bg-animation"></div>
+    <div class="glow-spot"></div>
 
-        /* 2. Teks Alternatif untuk aksesibilitas */
-        alt="Model 3D dari AMD Ryzen 5 7600 Socket AM5"
+    <div class="glass-card">
+        
+        <model-viewer 
+            src="computer_processor.glb" 
+            auto-rotate 
+            rotation-per-second="30deg"
+            disable-zoom
+            camera-controls
+            shadow-intensity="1"
+            interaction-prompt="none">
+        </model-viewer>
 
-        /* 3. MENGAKTIFKAN FITUR AR */
-        ar
+        <h1>AR Hardware</h1>
+        
+        <a href="soal1.html" class="btn btn-1">
+            <span style="margin-right: 10px;">🔥</span> Soal 1: Ryzen
+        </a>
+        
+        <a href="soal2.html" class="btn btn-2">
+            <span style="margin-right: 10px;">💾</span> Soal 2: CPU
+        </a>
 
-        /* Mode AR: Mencoba WebXR dulu (Android baru), lalu Scene Viewer (Android lama), lalu Quick Look (iOS) */
-        ar-modes="webxr scene-viewer quick-look"
-
-        /* Mengizinkan pengguna memutar/zoom model dengan jari di layar sebelum masuk mode AR */
-        camera-controls
-
-        /* Membuat model berputar otomatis perlahan agar terlihat dinamis */
-        auto-rotate
-
-        /* Menambahkan bayangan di bawah objek agar terlihat menempel di lantai/meja */
-        shadow-intensity="1"
-        shadow-softness="0.5">
-
-        <button slot="ar-button" style="background-color: #E4002B; border-radius: 8px; border: none; position: absolute; bottom: 20px; right: 20px; padding: 12px 24px; color: white; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-            👋 Lihat di Dunia Nyata (AR)
-        </button>
-
-    </model-viewer>
+        <p>PILIH MATERI UNTUK SCAN AR</p>
+    </div>
 
 </body>
 </html>
